@@ -37,55 +37,57 @@ PROTO_ARG=""
 
 # ── Banner ──────────────────────────────────────────────────────
 banner() {
-    echo -e "${BC}"
-    cat << 'EOF'
-
-  _ __  __  _____  ___ _ __  _ __ __ _ _   _
- | '_ \\ \\ \\/ / __|/ _ \ '_ \| '__/ _` | | | |
- | | | |> << (__  __/ |_) | | | (_| | |_| |
- |_| |_/_/\_\\\___|\___| .__/|_|  \__,_|\__, |
-                        |_|              |___/
-EOF
-    echo -e "${NC}"
-    echo -e "  ${W}nxcspray${NC} ${DIM}v${VERSION}${NC} — ${C}Multi-protocol credential spray & validator${NC}"
-    echo -e "  ${DIM}──────────────────────────────────────────────${NC}"
+    echo ""
+    echo -e "${W}═══════════════════════════════════════${NC}"
+    echo -e "${W}  NXCSPRAY${NC}  ${DIM}v${VERSION}${NC}"
+    echo -e "${W}═══════════════════════════════════════${NC}"
+    echo ""
+    echo -e "${C}         (((("
+    echo -e "        (((("
+    echo -e "         ))))"
+    echo -e "      _ .---."
+    echo -e "     ( |\`---'|"
+    echo -e "      \\|     |"
+    echo -e "      : .___, :"
+    echo -e "       \`-----'${NC}"
+    echo ""
+    echo -e "  ${DIM}Multi-protocol credential spray & validator${NC}"
     echo ""
 }
 
 # ── Usage ───────────────────────────────────────────────────────
 usage() {
     banner
-    cat << EOF
-  ${W}USAGE${NC}
-    $(basename "$0") <protocols|all> <target> -u <user> -p <pass> [options]
-    $(basename "$0") all hosts.txt -u users.txt -p passes.txt [options]
-
-  ${W}POSITIONAL${NC}
-    protocols     Comma-separated list or 'all'
-                  (smb,ldap,mssql,rdp,winrm,ftp,ssh,vnc,wmi)
-    target        IP, CIDR, hostname, or file of targets
-
-  ${W}AUTH (same flags as nxc)${NC}
-    -u USER/FILE  Username or file of usernames
-    -p PASS/FILE  Password or file of passwords
-    -H HASH/FILE  NTLM hash or file of hashes (pass-the-hash)
-    -d DOMAIN     Domain for authentication
-    --local-auth  Force local authentication
-
-  ${W}OPTIONS${NC}
-    -o DIR        Output directory  (default: ./nxcspray_results)
-    --no-enum     Skip auto-enumeration on successful auth
-    -q            Quiet mode — only show hits
-    --help        This help
-
-  ${W}EXAMPLES${NC}
-    $(basename "$0") all 10.10.10.10 -u admin -p Password123
-    $(basename "$0") smb,rdp,winrm 192.168.1.0/24 -u admin -p Password123
-    $(basename "$0") all hosts.txt -u users.txt -p passes.txt -d corp.local
-    $(basename "$0") smb 10.10.10.10 -u administrator -H aad3b435b51404ee:deadbeef1234
-    $(basename "$0") mssql 10.10.10.10 -u sa -p Password123 --local-auth
-
-EOF
+    echo -e "usage: nxcspray [-h] <protocols|all> <target> -u USER -p PASS [options]"
+    echo ""
+    echo -e "Multi-Protocol Credential Spray Tool"
+    echo ""
+    echo -e "positional arguments:"
+    echo -e "  protocols             smb,ldap,mssql,rdp,winrm,ftp,ssh,vnc,wmi  or  all"
+    echo -e "  target                IP, CIDR, hostname, or file of targets"
+    echo ""
+    echo -e "auth arguments (same flags as nxc):"
+    echo -e "  -u USER|FILE          Username or file of usernames"
+    echo -e "  -p PASS|FILE          Password or file of passwords"
+    echo -e "  -H HASH|FILE          NTLM hash or file of hashes (pass-the-hash)"
+    echo -e "  -d DOMAIN             Domain for authentication"
+    echo -e "  --local-auth          Force local authentication"
+    echo ""
+    echo -e "options:"
+    echo -e "  -o DIR                Output directory (default: ./nxcspray_results)"
+    echo -e "  --no-enum             Skip auto-enumeration on successful auth"
+    echo -e "  -q                    Quiet mode — only show hits"
+    echo -e "  -h, --help            Show this help message and exit"
+    echo ""
+    echo -e "examples:"
+    echo -e "  nxcspray all 10.10.10.10 -u admin -p Password123"
+    echo -e "  nxcspray smb,rdp,winrm 192.168.1.0/24 -u admin -p Password123"
+    echo -e "  nxcspray all hosts.txt -u users.txt -p passes.txt -d corp.local"
+    echo -e "  nxcspray smb 10.10.10.10 -u administrator -H aad3b435b51404ee:deadbeef1234"
+    echo -e "  nxcspray mssql 10.10.10.10 -u sa -p Password123 --local-auth"
+    echo ""
+    echo -e "Run 'nxcspray --help' to see this message."
+    echo ""
     exit 0
 }
 
@@ -122,7 +124,6 @@ resolve_up() {
 # ── Parse args ──────────────────────────────────────────────────
 parse_args() {
     if [[ $# -lt 2 ]]; then
-        log_fail "Too few arguments"
         usage
     fi
 
